@@ -4,12 +4,14 @@ import { uiReducer } from "./uiReducer"
 
 export interface UIState {
     sideMenuOpen: boolean,
-    isAdding: boolean
+    isAdding: boolean,
+    isDragging: boolean
 }
 
 const UI_INITIAL_STATE:UIState = {
     sideMenuOpen: false,
-    isAdding: false
+    isAdding: false,
+    isDragging: false
 }
 
 interface Props {
@@ -21,11 +23,13 @@ export const UIProvider: FC<Props> = ({children}) => {
     const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE)
 
     const openSideMenu = (): any=> dispatch({type: "UI - Open Sidebar"})
+    const closeSideMenu = (): any => dispatch({type: "UI - Close Sidebar"})
 
     const setIsAddingClose = () => dispatch({type: "UI - Close Input"})
     const setIsAddingOpen = () => dispatch({type: "UI - Show Input"})
 
-    const closeSideMenu = (): any => dispatch({type: "UI - Close Sidebar"})
+    const setIsDragging = (): void => dispatch({type: "UI - Is Dragging"})
+    const setNotDragging = (): void => dispatch({type: "UI - Is Not Dragging"})
 
     return(
         <UIContext.Provider value={{
@@ -33,7 +37,9 @@ export const UIProvider: FC<Props> = ({children}) => {
             openSideMenu,
             closeSideMenu,
             setIsAddingClose,
-            setIsAddingOpen
+            setIsAddingOpen,
+            setIsDragging,
+            setNotDragging,
         }}>
             {children}
         </UIContext.Provider>
