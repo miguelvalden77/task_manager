@@ -1,26 +1,32 @@
 import { Entry } from "@/interfaces";
 import { EntriesState } from "./EntriesProvider";
+import entriesApi from "@/apis/entriesApi";
 
-type EntriesActionType = {type: "Add Entry", payload: Entry} | {type: "Update Entry", payload: Entry}
+type EntriesActionType = { type: "Add Entry", payload: Entry } | { type: "Update Entry", payload: Entry } | { type: "Refresh Data", payload: Entry[] }
 
 
-export const entriesReducer = (state: EntriesState, action: EntriesActionType): EntriesState=>{
-    
-    switch(action.type){
+export const entriesReducer = (state: EntriesState, action: EntriesActionType): EntriesState => {
+
+    switch (action.type) {
+
+        case "Refresh Data":
+            return { ...state, entries: [...action.payload] }
 
         case "Add Entry":
-            return {...state, entries: [...state.entries, action.payload]}
+            return { ...state, entries: [...state.entries, action.payload] }
 
         case "Update Entry":
-            return {...state, entries: state.entries.map((entry)=>{
+            return {
+                ...state, entries: state.entries.map((entry) => {
 
-                if(entry._id == action.payload._id){
-                    entry.description = action.payload.description
-                    entry.status = action.payload.status
-                }
+                    if (entry._id == action.payload._id) {
+                        entry.description = action.payload.description
+                        entry.status = action.payload.status
+                    }
 
-                return entry
-            })}
+                    return entry
+                })
+            }
 
         default: return state
     }

@@ -5,6 +5,8 @@ import { FC, useContext, useMemo } from "react"
 import { EntriesContext } from "../entries"
 import { UIContext } from "./UIContext"
 import style from "./Entry.List.module.css"
+import axios from "axios"
+import { GetServerSideProps } from "next"
 
 interface Props {
     status: EntryStatus
