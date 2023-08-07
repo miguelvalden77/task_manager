@@ -14,9 +14,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     case "POST":
       return createEntry(req, res)
-
-    case "PUT":
-      return updateEntry(req, res)
   }
 
 }
@@ -40,15 +37,4 @@ const createEntry = async (req: NextApiRequest, res: NextApiResponse) => {
   await db.disconnect()
 
   res.status(200).json({ entry })
-}
-
-
-const updateEntry = async (req: NextApiRequest, res: NextApiResponse) => {
-
-  const { _id, status } = req.body
-
-  const updatedEntry = await EntryModel.findByIdAndUpdate(_id, { status: status })
-
-  res.status(200).json(updatedEntry)
-
 }

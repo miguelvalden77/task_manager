@@ -1,6 +1,5 @@
 import { Entry } from "@/interfaces";
 import { EntriesState } from "./EntriesProvider";
-import entriesApi from "@/apis/entriesApi";
 
 type EntriesActionType = { type: "Add Entry", payload: Entry } | { type: "Update Entry", payload: Entry } | { type: "Refresh Data", payload: Entry[] }
 
