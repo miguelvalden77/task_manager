@@ -1,32 +1,52 @@
 import { Layout } from "@/components/layouts"
-import { EntryStatus } from "@/interfaces"
+import { EntriesContext } from "@/context/entries"
+import { getEntryById } from "@/database/entryDb"
+import { Entry, EntryStatus } from "@/interfaces"
 import { DeleteOutline, SaveOutlined } from "@mui/icons-material"
 import { Button, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, IconButton, Radio, RadioGroup, TextField, capitalize } from "@mui/material"
 import { isValidObjectId } from "mongoose"
 import { GetServerSideProps } from "next"
-import { ChangeEvent, useState } from "react"
+import { useRouter } from "next/router"
+import { ChangeEvent, FC, useContext, useState } from "react"
 
 const radioOptions: EntryStatus[] = ["Pending", "In progress", "finished"]
 
-const EntryPage = ({ id }: any) => {
+interface Props {
+    entry: Entry
+}
 
-    const [inputValue, setInputValue] = useState("")
-    const [status, setStatus] = useState<EntryStatus>("Pending")
+const EntryPage: FC<Props> = ({ entry }) => {
+
+    const [inputValue, setInputValue] = useState<string>(entry.description)
+    const [status, setStatus] = useState<EntryStatus>(entry.status)
     const [touched, setTouched] = useState<Boolean>(false)
+
+    const { updateEntry } = useContext(EntriesContext)
+
+    const router = useRouter()
 
     const changeInput = (evt: ChangeEvent<HTMLInputElement>) => setInputValue(evt.target.value)
     const changeStatus = (evt: ChangeEvent<HTMLInputElement>) => setStatus(evt.target.value as EntryStatus)
-    const onSave = () => console.log({ status, inputValue })
+    const onSave = () => {
+        if (inputValue.length === 0) return
 
-    console.log(id)
+        try {
+            const updatedEntry = { ...entry, description: inputValue, status }
+            updateEntry(updatedEntry)
+            router.push("/")
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
-        <Layout title="...">
+        <Layout title={inputValue}>
             <Grid container justifyContent={"center"} sx={{ marginTop: 2 }}>
 
                 <Grid item xs={12} sm={8} md={6}>
                     <Card>
-                        <CardHeader title={`Entrada: `} subheader={`Hace ...`}>
+                        <CardHeader title={`Entrada: ${inputValue.slice(0, 15)}`} subheader={`Hace ${entry.createdAt} minutos`}>
                         </CardHeader>
 
                         <CardContent>
@@ -66,7 +86,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
     const { id } = params as { id: string }
 
-    if (!isValidObjectId(id)) {
+    const entry = await getEntryById(id)
+
+    if (!entry) {
         return {
             redirect: {
                 destination: "/",
@@ -77,7 +99,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
     return {
         props: {
-            id
+            entry
         }
     }
 

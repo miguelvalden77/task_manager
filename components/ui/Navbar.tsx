@@ -1,21 +1,26 @@
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material"
+import { AppBar, IconButton, Link, Toolbar, Typography } from "@mui/material"
 import { MenuOutlined } from "@mui/icons-material"
 import { useContext } from "react"
 import { UIContext } from "@/context/ui"
+import NextLink from "next/link"
 
 
-export const Navbar = ()=>{
+export const Navbar = () => {
 
-    const {openSideMenu} = useContext(UIContext)
+    const { openSideMenu } = useContext(UIContext)
 
-    return(
+    return (
         <AppBar position="sticky" elevation={0}>
             <Toolbar>
-                <IconButton  onClick={openSideMenu} size="large" edge="start">
+                <IconButton onClick={openSideMenu} size="large" edge="start">
                     <MenuOutlined />
                 </IconButton>
 
-                <Typography variant="h6">Task Manager</Typography>
+                <NextLink href={"/"} passHref>
+                    <Link underline="none" color={"white"}>
+                        <Typography variant="h6">Task Manager</Typography>
+                    </Link>
+                </NextLink>
             </Toolbar>
         </AppBar>
     )
