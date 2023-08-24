@@ -16,10 +16,8 @@ export const Navbar = () => {
                     <MenuOutlined />
                 </IconButton>
 
-                <NextLink href={"/"} passHref>
-                    <Link underline="none" color={"white"}>
-                        <Typography variant="h6">Task Manager</Typography>
-                    </Link>
+                <NextLink href={"/"} passHref style={{ textDecoration: "none", color: "white" }}>
+                    <Typography variant="h6">Task Manager</Typography>
                 </NextLink>
             </Toolbar>
         </AppBar>

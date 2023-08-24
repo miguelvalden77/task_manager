@@ -163,6 +163,13 @@
   "resolved" "https://registry.npmjs.org/@fontsource/roboto/-/roboto-5.0.4.tgz"
   "version" "5.0.4"
 
+"@mongodb-js/saslprep@^1.1.0":
+  "integrity" "sha512-Xfijy7HvfzzqiOAhAepF4SGN5e9leLkMvg/OPOF97XemjfVCYN/oWa75wnkc6mltMSTwY+XlbhWgUOJmkFspSw=="
+  "resolved" "https://registry.npmjs.org/@mongodb-js/saslprep/-/saslprep-1.1.0.tgz"
+  "version" "1.1.0"
+  dependencies:
+    "sparse-bitfield" "^3.0.3"
+
 "@mui/base@5.0.0-beta.6":
   "integrity" "sha512-jcHy6HwOX7KzRhRtL8nvIvUlxvLx2Fl6NMRCyUSQSvMTyfou9kndekz0H4HJaXvG1Y4WEifk23RYedOlrD1kEQ=="
   "resolved" "https://registry.npmjs.org/@mui/base/-/base-5.0.0-beta.6.tgz"
@@ -628,6 +635,17 @@
   dependencies:
     "@types/whatwg-url" "^8.2.1"
     "whatwg-url" "^11.0.0"
+
+"mongodb@^5.8.1":
+  "integrity" "sha512-wKyh4kZvm6NrCPH8AxyzXm3JBoEf4Xulo0aUWh3hCgwgYJxyQ1KLST86ZZaSWdj6/kxYUA3+YZuyADCE61CMSg=="
+  "resolved" "https://registry.npmjs.org/mongodb/-/mongodb-5.8.1.tgz"
+  "version" "5.8.1"
+  dependencies:
+    "bson" "^5.4.0"
+    "mongodb-connection-string-url" "^2.6.0"
+    "socks" "^2.7.1"
+  optionalDependencies:
+    "@mongodb-js/saslprep" "^1.1.0"
 
 "mongodb@5.7.0":
   "integrity" "sha512-zm82Bq33QbqtxDf58fLWBwTjARK3NSvKYjyz997KSy6hpat0prjeX/kxjbPVyZY60XYPDNETaHkHJI2UCzSLuw=="

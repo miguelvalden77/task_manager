@@ -10,16 +10,16 @@ type Data = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
-    if(process.env.NODE_ENV === "production"){
-        return res.status(401).json({message: "No tienes acceso al servicio"})
-    }
+  if (process.env.NODE_ENV === "production") {
+    return res.status(401).json({ message: "No tienes acceso al servicio" })
+  }
 
-    await db.connect()
+  await db.connect()
 
-    await EntryModel.deleteMany()
-    await EntryModel.insertMany(seedData.entries)
+  await EntryModel.deleteMany()
+  await EntryModel.insertMany(seedData.entries)
 
-    await db.disconnect()
+  await db.disconnect()
 
 
 
