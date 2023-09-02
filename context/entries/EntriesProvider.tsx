@@ -41,6 +41,16 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
         }
     }
 
+    const deleteEntry = async (entryId: string) => {
+        try {
+            const { data } = await entriesApi.delete<Entry>(`/entry/${entryId}`)
+            dispatch({ type: "Delete Entry", payload: data._id })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
     const refreshEntries = async () => {
         const { data } = await entriesApi<Entry[]>("/entries/allEntries")
 
@@ -55,7 +65,8 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
         <EntriesContext.Provider value={{
             ...state,
             addNewEntry,
-            updateEntry
+            updateEntry,
+            deleteEntry
         }}>
             {children}
         </EntriesContext.Provider>

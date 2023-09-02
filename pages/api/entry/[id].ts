@@ -13,6 +13,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return updateEntry(req, res)
         case "GET":
             return getEntry(req, res)
+        case "DELETE":
+            return deleteEntry(req, res)
     }
 
 }
@@ -52,6 +54,24 @@ const getEntry = async (req: NextApiRequest, res: NextApiResponse<Entry | any>) 
     } catch (error: unknown) {
         console.log({ error })
         res.status(400).json({ errorMessage: "No se puede encontrar" })
+    }
+
+}
+
+const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Entry | any>) => {
+
+    const { id } = req.query
+    console.log({ id })
+
+    try {
+        await db.connect()
+        const entry = await EntryModel.findByIdAndDelete(id)
+        await db.disconnect()
+
+        res.json(entry)
+
+    } catch (error) {
+        console.log(error)
     }
 
 }

@@ -21,12 +21,16 @@ const EntryPage: FC<Props> = ({ entry }) => {
     const [status, setStatus] = useState<EntryStatus>(entry.status)
     const [touched, setTouched] = useState<Boolean>(false)
 
-    const { updateEntry } = useContext(EntriesContext)
+    const { updateEntry, deleteEntry } = useContext(EntriesContext)
 
     const router = useRouter()
 
     const changeInput = (evt: ChangeEvent<HTMLInputElement>) => setInputValue(evt.target.value)
     const changeStatus = (evt: ChangeEvent<HTMLInputElement>) => setStatus(evt.target.value as EntryStatus)
+    const deleteTheEntry = (entryId: string): void => {
+        deleteEntry(entryId)
+        router.push("/")
+    }
     const onSave = () => {
         if (inputValue.length === 0) return
 
@@ -72,7 +76,7 @@ const EntryPage: FC<Props> = ({ entry }) => {
                     </Card>
                 </Grid>
 
-                <IconButton sx={{ position: "fixed", bottom: 30, right: 30, backgroundColor: "red" }}>
+                <IconButton onClick={() => deleteTheEntry(entry._id)} sx={{ position: "fixed", bottom: 30, right: 30, backgroundColor: "red" }}>
                     <DeleteOutline />
                 </IconButton>
 
